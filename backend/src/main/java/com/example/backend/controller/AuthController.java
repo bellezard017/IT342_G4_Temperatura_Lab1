@@ -31,6 +31,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.dashboard(username));
     }
 
+    @GetMapping("/profile/{username}")
+    public ResponseEntity<DashboardResponse> profile(@PathVariable String username) {
+        return ResponseEntity.ok(authService.dashboard(username));
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
         authService.logout(token);

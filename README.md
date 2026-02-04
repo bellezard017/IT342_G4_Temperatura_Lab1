@@ -1,0 +1,1 @@
+# IT342_G4_Temperatura_Lab1

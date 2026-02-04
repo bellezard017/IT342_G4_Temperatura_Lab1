@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.dto.*;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.security.PasswordService;  // ← Updated import!
 import com.example.backend.security.TokenProvider;
 import org.springframework.stereotype.Service;
 

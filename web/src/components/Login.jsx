@@ -17,9 +17,8 @@ export default function Login({ onLoginSuccess, onGoToRegister }) {
         throw new Error('Please fill in all fields')
       }
 
-      if (password.length < 6) {
-        throw new Error('Password must be at least 6 characters')
-      }
+      // Removed the 6-character check since backend requires stronger password
+      // The backend will validate on registration
 
       const response = await authAPI.login({
         username: username,

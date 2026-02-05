@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+const API_BASE_URL = 'http://localhost:8080/api'
 
 // Helper function to make API calls
 const apiCall = async (endpoint, method = 'GET', data = null, token = null) => {
@@ -13,8 +13,6 @@ const apiCall = async (endpoint, method = 'GET', data = null, token = null) => {
   const options = {
     method,
     headers,
-    mode: 'cors',
-    credentials: 'include',
   }
 
   if (data) {
@@ -22,22 +20,28 @@ const apiCall = async (endpoint, method = 'GET', data = null, token = null) => {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, options)
+    const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`
+    console.log(`API Call: ${method} ${url}`)
     
-    let errorData = {}
-    try {
-      errorData = await response.clone().json()
-    } catch (e) {
-      // Response might not be JSON
+    const response = await fetch(url, options)
+    
+    let responseData = null
+    const contentType = response.headers.get('content-type')
+    
+    if (contentType && contentType.includes('application/json')) {
+      responseData = await response.json()
+    } else {
+      const text = await response.text()
+      responseData = text ? { message: text } : {}
     }
 
     if (!response.ok) {
-      const errorMessage = errorData.message || errorData.error || `API Error: ${response.status}`
+      const errorMessage = responseData.message || responseData.error || `API Error: ${response.status}`
       throw new Error(errorMessage)
     }
 
-    const result = await response.json()
-    return result
+    console.log(`API Response: ${method} ${url}`, responseData)
+    return responseData
   } catch (error) {
     console.error(`API Call Error (${method} ${endpoint}):`, error)
     throw error
@@ -61,6 +65,7 @@ export const authAPI = {
   logout: (token) => {
     return apiCall('/auth/logout', 'POST', null, token)
   },
+
   profile: (username, token) => {
     return apiCall(`/auth/profile/${username}`, 'GET', null, token)
   },

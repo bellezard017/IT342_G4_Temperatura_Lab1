@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     private final AuthService authService;
@@ -37,8 +36,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        authService.logout(token);
+    public ResponseEntity<String> logout(@RequestHeader(value = "Authorization", required = false) String token) {
+        if (token != null) {
+            authService.logout(token);
+        }
         return ResponseEntity.ok("Logged out");
     }
 }

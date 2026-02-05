@@ -3,7 +3,7 @@ package com.example.backend.service;
 import com.example.backend.dto.*;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.security.PasswordService;  // ← Updated import!
+import com.example.backend.security.PasswordService;
 import com.example.backend.security.TokenProvider;
 import com.example.backend.exception.ApiException;
 import org.springframework.http.HttpStatus;
@@ -37,8 +37,12 @@ public class AuthService {
             throw new ApiException("Password must be at least 8 characters long and include upper, lower, digit, and special character", HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.existsByUsername(req.username) || userRepository.existsByEmail(req.email)) {
-            throw new ApiException("account already exist", HttpStatus.CONFLICT);
+        if (userRepository.existsByUsername(req.username)) {
+            throw new ApiException("Username already exists", HttpStatus.CONFLICT);
+        }
+        
+        if (userRepository.existsByEmail(req.email)) {
+            throw new ApiException("Email already exists", HttpStatus.CONFLICT);
         }
 
         User user = new User();
@@ -66,10 +70,10 @@ public class AuthService {
         }
 
         User user = userRepository.findByUsername(req.username)
-                .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiException("Invalid username or password", HttpStatus.UNAUTHORIZED));
 
         if (!passwordService.matches(req.password, user.getPassword_hash())) {
-            throw new ApiException("Invalid credentials", HttpStatus.UNAUTHORIZED);
+            throw new ApiException("Invalid username or password", HttpStatus.UNAUTHORIZED);
         }
 
         return new AuthResponse(

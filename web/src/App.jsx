@@ -54,6 +54,8 @@ function App() {
 
   return (
     <div className="app">
+      <h1 className="app-title">Mini-App</h1>
+      
       {currentPage === 'login' && (
         <Login onLoginSuccess={handleLoginSuccess} onGoToRegister={handleGoToRegister} />
       )}

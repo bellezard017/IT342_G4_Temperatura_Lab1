@@ -6,6 +6,7 @@ This document tracks the development progress of the IT342 Authentication System
 
 ## ✅ Done
 
+### Backend Development
 - [x] GitHub repository created
 - [x] Project structure planned based on UML diagrams
 - [x] Spring Boot backend initialized using Maven
@@ -13,41 +14,66 @@ This document tracks the development progress of the IT342 Authentication System
 - [x] Maven dependencies configured
 - [x] Project builds successfully
 - [x] UML diagrams completed (Use Case, Class, Sequence, Activity)
-- [x] Basic package structure created (controller, model, repository, dto)
+- [x] Basic package structure created (controller, model, repository, dto, service, security, exception)
 - [x] User entity class created based on ERD
 - [x] User repository interface created
+- [x] Service layer implemented (AuthService, PasswordService, TokenProvider)
+- [x] Authentication logic implemented (register & login)
+- [x] Dashboard backend endpoint implemented
+- [x] Profile backend endpoint implemented
+- [x] Password hashing implementation (BCrypt)
+- [x] User CRUD operations implemented (UserController)
+- [x] Error handling and validation implemented (ApiException, GlobalExceptionHandler)
+- [x] Security configuration implemented (CORS in WebConfig)
+- [x] Logout functionality implemented
+
+### Database
+- [x] MySQL database configured using XAMPP
+- [x] Spring Boot connected to MySQL
+- [x] Database tables created (users table with proper schema)
+- [x] Fixed PropertyReferenceException (entity field naming)
+- [x] Database connection tested and verified
+
+### Frontend Development
+- [x] React frontend created using Vite
+- [x] Login UI implemented
+- [x] Registration UI implemented
+- [x] Dashboard UI implemented
+- [x] Profile UI implemented
+- [x] Modern UI design applied (glass morphism, gradient backgrounds, neon accents)
+- [x] Custom fonts implemented (Sora, Space Mono)
+- [x] Responsive design for mobile/tablet/desktop
+- [x] Form validation implemented
+- [x] Password strength validation implemented
+- [x] Frontend connected to backend API
+- [x] Routing implemented (React Router)
+- [x] API service layer created
+- [x] Error handling and user feedback implemented
 
 ---
 
 ## 🔄 In Progress
 
-- [ ] Implementing service layer (business logic)
-- [ ] Implementing authentication logic (register & login)
-- [ ] Implementing dashboard backend endpoint
-- [ ] Password hashing implementation
-- [ ] API endpoint testing (Postman)
+- [ ] API endpoint testing using Postman
+- [ ] Final testing of all features (register, login, dashboard, profile, logout)
+- [ ] Browser compatibility testing
+- [ ] Mobile responsiveness testing
+- [ ] Bug fixes and refinements
 
 ---
 
 ## 📝 To Do
 
-- [ ] Configure MySQL database using XAMPP
-- [ ] Connect Spring Boot to MySQL
-- [ ] Create database tables
-- [ ] Implement security configuration
-- [ ] Implement logout functionality
-- [ ] Add error handling and validation
-- [ ] Create React frontend using Vite
-- [ ] Implement login and registration UI
-- [ ] Implement dashboard UI
-- [ ] Connect frontend to backend
-- [ ] Finalize documentation
+- [ ] Finalize project documentation
+- [ ] Update README with setup instructions
+- [ ] Document API endpoints
+- [ ] Add screenshots of application
+- [ ] Create user guide
+- [ ] Code cleanup and optimization
+- [ ] Add code comments and documentation
+- [ ] Prepare presentation slides
+- [ ] Record demo video (optional)
+- [ ] Final testing before submission
 - [ ] Prepare project for final demo and submission
-
----
-
-## 🧠 Notes
-
-- Backend is being developed using Spring Boot.
-- Database and security implementation will be added in the next phase.
-- Frontend will be developed using React + Vite.
+- [ ] Submit project to GitHub
+- [ ] Present project to class

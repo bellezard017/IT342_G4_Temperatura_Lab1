@@ -49,7 +49,7 @@ public class UserController {
         user.setUsername(req.username.trim());
         user.setEmail(req.email.trim().toLowerCase());
         user.setFullname(req.fullname == null ? "" : req.fullname.trim());
-        user.setPassword_hash(passwordService.encode(req.password));
+        user.setPasswordHash(passwordService.encode(req.password));  // FIXED: Changed from setPassword_hash
 
         User saved = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
@@ -76,7 +76,7 @@ public class UserController {
 
         if (req.username != null && !req.username.trim().isEmpty()) {
             userRepository.findByUsername(req.username.trim())
-                    .filter(existing -> !existing.getUser_id().equals(id))
+                    .filter(existing -> !existing.getUserId().equals(id))  // FIXED: Changed from getUser_id
                     .ifPresent(existing -> {
                         throw new ApiException("Username already in use", HttpStatus.CONFLICT);
                     });
@@ -85,7 +85,7 @@ public class UserController {
 
         if (req.email != null && !req.email.trim().isEmpty()) {
             userRepository.findByEmail(req.email.trim().toLowerCase())
-                    .filter(existing -> !existing.getUser_id().equals(id))
+                    .filter(existing -> !existing.getUserId().equals(id))  // FIXED: Changed from getUser_id
                     .ifPresent(existing -> {
                         throw new ApiException("Email already in use", HttpStatus.CONFLICT);
                     });
@@ -111,7 +111,7 @@ public class UserController {
 
     private UserResponse toResponse(User user) {
         return new UserResponse(
-                user.getUser_id(),
+                user.getUserId(),  // FIXED: Changed from getUser_id
                 user.getUsername(),
                 user.getEmail(),
                 user.getFullname()

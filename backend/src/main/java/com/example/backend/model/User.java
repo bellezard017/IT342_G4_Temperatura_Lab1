@@ -8,7 +8,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")  // Maps to database column "user_id"
+    private Long userId;  // Changed from user_id to userId (Java convention)
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -18,13 +19,13 @@ public class User {
 
     private String fullname;
 
-    @Column(nullable = false)
-    private String password_hash;
+    @Column(name = "password_hash", nullable = false)  // Maps to database column "password_hash"
+    private String passwordHash; // Changed from password_hash to passwordHash (Java convention)
 
     public User() {}
 
-    public Long getUser_id() { return user_id; }
-    public void setUser_id(Long user_id) { this.user_id = user_id; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
@@ -35,6 +36,6 @@ public class User {
     public String getFullname() { return fullname; }
     public void setFullname(String fullname) { this.fullname = fullname; }
 
-    public String getPassword_hash() { return password_hash; }
-    public void setPassword_hash(String password_hash) { this.password_hash = password_hash; }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 }

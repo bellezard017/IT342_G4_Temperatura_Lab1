@@ -49,7 +49,7 @@ public class AuthService {
         user.setUsername(req.username.trim());
         user.setEmail(req.email.trim().toLowerCase());
         user.setFullname(req.fullname == null ? "" : req.fullname.trim());
-        user.setPassword_hash(passwordService.encode(req.password));
+        user.setPasswordHash(passwordService.encode(req.password));  // Changed to setPasswordHash
 
         userRepository.save(user);
 
@@ -72,7 +72,7 @@ public class AuthService {
         User user = userRepository.findByUsername(req.username)
                 .orElseThrow(() -> new ApiException("Invalid username or password", HttpStatus.UNAUTHORIZED));
 
-        if (!passwordService.matches(req.password, user.getPassword_hash())) {
+        if (!passwordService.matches(req.password, user.getPasswordHash())) {  // Changed to getPasswordHash
             throw new ApiException("Invalid username or password", HttpStatus.UNAUTHORIZED);
         }
 

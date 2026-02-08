@@ -1,45 +1,45 @@
-package com.example.backend.controller;
+    package com.example.backend.controller;
 
-import com.example.backend.dto.*;
-import com.example.backend.service.AuthService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+    import com.example.backend.dto.*;
+    import com.example.backend.service.AuthService;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+    @RestController
+    @RequestMapping("/api/auth")
+    public class AuthController {
 
-    private final AuthService authService;
+        private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest req) {
-        return ResponseEntity.ok(authService.register(req));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
-        return ResponseEntity.ok(authService.login(req));
-    }
-
-    @GetMapping("/dashboard/{username}")
-    public ResponseEntity<DashboardResponse> dashboard(@PathVariable String username) {
-        return ResponseEntity.ok(authService.dashboard(username));
-    }
-
-    @GetMapping("/profile/{username}")
-    public ResponseEntity<DashboardResponse> profile(@PathVariable String username) {
-        return ResponseEntity.ok(authService.dashboard(username));
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader(value = "Authorization", required = false) String token) {
-        if (token != null) {
-            authService.logout(token);
+        public AuthController(AuthService authService) {
+            this.authService = authService;
         }
-        return ResponseEntity.ok("Logged out");
+
+        @PostMapping("/register")
+        public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest req) {
+            return ResponseEntity.ok(authService.register(req));
+        }
+
+        @PostMapping("/login")
+        public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
+            return ResponseEntity.ok(authService.login(req));
+        }
+
+        @GetMapping("/dashboard/{username}")
+        public ResponseEntity<DashboardResponse> dashboard(@PathVariable String username) {
+            return ResponseEntity.ok(authService.dashboard(username));
+        }
+
+        @GetMapping("/profile/{username}")
+        public ResponseEntity<DashboardResponse> profile(@PathVariable String username) {
+            return ResponseEntity.ok(authService.dashboard(username));
+        }
+
+        @PostMapping("/logout")
+        public ResponseEntity<String> logout(@RequestHeader(value = "Authorization", required = false) String token) {
+            if (token != null) {
+                authService.logout(token);
+            }
+            return ResponseEntity.ok("Logged out");
+        }
     }
-}

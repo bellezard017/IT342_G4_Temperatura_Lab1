@@ -2,32 +2,7 @@ import { useState, useEffect } from 'react'
 import { authAPI } from '../utils/api'
 
 export default function Dashboard({ user, token, onLogout, onViewProfile }) {
-  const [dashboardData, setDashboardData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        setLoading(true)
-        const storedUser = localStorage.getItem('user')
-        const userData = storedUser ? JSON.parse(storedUser) : user
-
-        if (!userData || !userData.username) {
-          throw new Error('User data not found')
-        }
-
-        const data = await authAPI.dashboard(userData.username, token)
-        setDashboardData(data)
-      } catch (err) {
-        setError(err.message || 'Failed to load dashboard')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchDashboardData()
-  }, [user, token])
+  const [loading, setLoading] = useState(false)
 
   const handleLogout = async () => {
     try {
@@ -42,17 +17,6 @@ export default function Dashboard({ user, token, onLogout, onViewProfile }) {
   const storedUser = localStorage.getItem('user')
   const userData = storedUser ? JSON.parse(storedUser) : user
 
-  if (loading) {
-    return (
-      <div className="dashboard">
-        <div className="loading">
-          <div className="loading-spinner"></div>
-          <p>Loading dashboard...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="dashboard">
       <div className="dashboard-header">
@@ -62,43 +26,30 @@ export default function Dashboard({ user, token, onLogout, onViewProfile }) {
         </button>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
-
       {userData && (
-        <div className="user-info">
-          <p>
-            <strong>Welcome,</strong> {userData.fullname || userData.username}!
-          </p>
-          <p>
-            <strong>Email:</strong> {userData.email}
-          </p>
-          <p>
-            <strong>Username:</strong> {userData.username}
+        <div className="user-info" style={{ textAlign: 'center', padding: '2rem' }}>
+          <h2 style={{ 
+            fontSize: '2rem', 
+            fontWeight: '700', 
+            marginBottom: '0.5rem',
+            color: '#1b4332',
+            fontFamily: 'var(--font-heading)'
+          }}>
+            Welcome, {userData.fullname || userData.username}!
+          </h2>
+          <p style={{
+            fontSize: '0.9rem',
+            color: 'var(--text-secondary)',
+            fontFamily: 'var(--font-mono)',
+            marginBottom: '2rem'
+          }}>
+            this is your dashboard
           </p>
         </div>
       )}
 
-      {dashboardData && (
-        <div className="user-info">
-          <h2 style={{ color: '#e94560', marginBottom: '15px' }}>Dashboard Info</h2>
-          <p>
-            <strong>Message:</strong> {dashboardData.message || 'Welcome to your dashboard'}
-          </p>
-          {dashboardData.username && (
-            <p>
-              <strong>Active User:</strong> {dashboardData.username}
-            </p>
-          )}
-          {dashboardData.timestamp && (
-            <p>
-              <strong>Last Login:</strong> {new Date(dashboardData.timestamp).toLocaleString()}
-            </p>
-          )}
-        </div>
-      )}
-
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '20px' }}>
-        <button className="btn btn-secondary" onClick={() => onViewProfile && onViewProfile()}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+        <button className="btn btn-primary" onClick={() => onViewProfile && onViewProfile()}>
           View Profile
         </button>
       </div>

@@ -102,10 +102,6 @@ export default function Dashboard({ user, token, onLogout, onViewProfile }) {
           View Profile
         </button>
       </div>
-
-      <div style={{ marginTop: '30px', textAlign: 'center', color: '#a8b5c4' }}>
-        <p>You are successfully logged in to the Temperature Lab system!</p>
-      </div>
     </div>
   )
 }
